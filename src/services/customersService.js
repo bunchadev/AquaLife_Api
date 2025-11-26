@@ -51,10 +51,19 @@ const deleteAll = async () => {
   } catch (error) { throw error }
 }
 
+const getById = async (id) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const item = await customersModel.findById(id)
+    return item
+  } catch (error) { throw error }
+}
+
 export const customersService = {
-  createNew
-  , getAll
-  , updateById
-  , deleteById
-  , deleteAll
+  createNew,
+  getAll,
+  getById,
+  updateById,
+  deleteById,
+  deleteAll
 }

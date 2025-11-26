@@ -8,7 +8,7 @@ const ORDERS_COLLECTION_SCHEMA = Joi.object({
   customersId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
   branchesId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
   totalPrice: Joi.number().min(0).required(),
-  status: Joi.string().valid('pending', 'confirmed', 'shipping', 'completed', 'cancelled').required(),
+  status: Joi.string().valid('Đang chờ', 'Đã xác nhận', 'Đang vận chuyển', 'Đã giao', 'Đã hủy').required(),
   orderDate: Joi.date().iso().required(),
   deliveryAddress: Joi.string().min(10).max(255).required(),
   note: Joi.string().max(500).allow('').optional(),
@@ -33,6 +33,30 @@ const createNew = async (data) => {
   } catch (error) { throw new Error(error) }
 }
 
+const findByCustomerId = async (customerId) => {
+  try {
+    const items = await GET_DB().collection(ORDERS_COLLECTION_NAME).find({ customersId: new ObjectId(customerId) }).toArray()
+    return items
+  } catch (error) { throw new Error(error) }
+}
+
+const findById = async (id) => {
+  try {
+    const item = await GET_DB().collection(ORDERS_COLLECTION_NAME).findOne({ _id: new ObjectId(id) })
+    return item
+  } catch (error) { throw new Error(error) }
+}
+
+const getAll = async () => {
+  try {
+    const items = await GET_DB().collection(ORDERS_COLLECTION_NAME).find({}).toArray()
+    return items
+  } catch (error) { throw new Error(error) }
+}
+
 export const ordersModel = {
-  createNew
+  createNew,
+  findByCustomerId,
+  findById,
+  getAll
 }

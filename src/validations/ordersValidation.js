@@ -15,10 +15,10 @@ const createNew = async (req, res, next) => {
       'any.required': '"totalPrice" is a required field.'
     }),
 
-    status: Joi.string().valid('pending', 'confirmed', 'shipping', 'completed', 'cancelled').required().messages({
+    status: Joi.string().valid('Đang chờ', 'Đã xác nhận', 'Đang vận chuyển', 'Đã giao', 'Đã hủy').required().messages({
       'string.base': '"status" must be a string.',
       'string.empty': '"status" cannot be an empty field.',
-      'any.only': '"status" must be one of [pending, confirmed, shipping, completed, cancelled].',
+      'any.only': '"status" must be one of [Đang chờ, Đã xác nhận, Đang vận chuyển, Đã giao, Đã hủy].',
       'any.required': '"status" is a required field.'
     }),
 

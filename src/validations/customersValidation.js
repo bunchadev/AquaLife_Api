@@ -38,6 +38,12 @@ const createNew = async (req, res, next) => {
       'string.min': '"password" is too short. It must be a valid hashed password (min {#limit} characters).',
       'string.max': '"password" is too long.',
       'any.required': '"password" is a required field.'
+    }),
+
+    image: Joi.string().uri().default('').messages({
+      'string.base': '"image" must be a string.',
+      'string.empty': '"image" cannot be an empty field.',
+      'string.uri': '"image" must be a valid URI.'
     })
   })
 

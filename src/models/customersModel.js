@@ -11,6 +11,7 @@ const CUSTOMERS_COLLECTION_SCHEMA = Joi.object({
   phone: Joi.string().pattern(PHONE_RULE).message(PHONE_RULE_MESSAGE),
   address: Joi.string().min(10).max(255),
   password: Joi.string().min(10).max(100).required(),
+  image: Joi.string().uri().default(''),
   createAt: Joi.date().timestamp('javascript').default(Date.now),
   updatedAt: Joi.date().timestamp('javascript').default(Date.now)
 })
