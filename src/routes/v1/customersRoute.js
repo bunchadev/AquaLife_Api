@@ -13,7 +13,8 @@ Router.route('/')
   .delete(verifyToken, authorize('admin'), customersController.deleteAll)
 
 Router.route('/:id')
-  .put(verifyToken, authorize('admin'), customersController.updateById)
+  .get(verifyToken, customersController.getById)
+  .put(verifyToken, customersController.updateById)
   .delete(verifyToken, authorize('admin'), customersController.deleteById)
 
 export const customersRouter = Router

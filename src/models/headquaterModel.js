@@ -33,6 +33,15 @@ const createNew = async (data) => {
 }
 
 
+const getInfo = async () => {
+  try {
+    const item = await GET_DB().collection(HEADQUATER_COLLECTION_NAME).findOne({}, { projection: { } })
+    return item
+  } catch (error) { throw new Error(error) }
+}
+
+
 export const headquaterModel = {
   createNew
+  , getInfo
 }

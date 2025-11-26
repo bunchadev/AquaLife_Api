@@ -12,6 +12,27 @@ const createNew = async (reqBody) => {
   } catch (error) { throw error }
 }
 
+const findByCustomerId = async (customerId) => {
+  try {
+    return await ordersModel.findByCustomerId(customerId)
+  } catch (err) { throw err }
+}
+
+const findById = async (id) => {
+  try {
+    return await ordersModel.findById(id)
+  } catch (err) { throw err }
+}
+
+const getAll = async () => {
+  try {
+    return await ordersModel.getAll()
+  } catch (err) { throw err }
+}
+
 export const ordersService = {
-  createNew
+  createNew,
+  findByCustomerId,
+  findById,
+  getAll
 }

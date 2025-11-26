@@ -50,7 +50,8 @@ const login = async (email, password) => {
           id: customer._id,
           name: customer.name,
           email: customer.email,
-          role: 'customer'
+          role: 'customer',
+          image: customer.image || ''
         }
       }
     }

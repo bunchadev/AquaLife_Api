@@ -9,6 +9,14 @@ const createNew = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
+const getInfo = async (req, res, next) => {
+  try {
+    const info = await headquaterService.getInfo()
+    res.status(StatusCodes.OK).json(info)
+  } catch (error) { next(error) }
+}
+
 export const headquaterController = {
   createNew
+  , getInfo
 }
