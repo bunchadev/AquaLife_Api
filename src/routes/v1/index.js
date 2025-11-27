@@ -21,7 +21,7 @@ Router.use('/employees', employeesRouter)
 Router.use('/customers', customersRouter)
 Router.use('/products', productsRouter)
 Router.use('/orders', ordersRouter)
-Router.use('/orderDetails', orderDetailsRouter)
+Router.use('/order-details', orderDetailsRouter)
 Router.use('/auth', authRoute)
 
 export const APIs_V1 = Router

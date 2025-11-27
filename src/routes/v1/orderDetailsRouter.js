@@ -5,6 +5,10 @@ import { orderDetailsValidation } from '../../validations/orderDetailsValidation
 const Router = express.Router()
 
 Router.route('/')
+  .get(orderDetailsController.getByOrderId)
   .post(orderDetailsValidation.createNew, orderDetailsController.createNew)
+
+Router.route('/:id')
+  .get(orderDetailsController.getById)
 
 export const orderDetailsRouter = Router
