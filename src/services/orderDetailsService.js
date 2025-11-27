@@ -15,7 +15,22 @@ const createNew = async (reqBody) => {
     return getNewOrderDetails
   } catch (error) { throw error }
 }
+const findByOrderId = async (orderId) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    return await orderDetailsModel.findByOrderId(orderId)
+  } catch (err) { throw err }
+}
+
+const findOneById = async (id) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    return await orderDetailsModel.findOneById(id)
+  } catch (err) { throw err }
+}
 
 export const orderDetailsService = {
-  createNew
+  createNew,
+  findByOrderId,
+  findOneById
 }

@@ -17,6 +17,12 @@ const getAll = async () => {
   return items
 }
 
+const findById = async (id) => {
+  try {
+    return await productsModel.findById(id)
+  } catch (err) { throw err }
+}
+
 const updateById = async (id, data) => {
   return await productsModel.updateById(id, data)
 }
@@ -32,6 +38,7 @@ const deleteAll = async () => {
 export const productsService = {
   createNew,
   getAll,
+  findById,
   updateById,
   deleteById,
   deleteAll

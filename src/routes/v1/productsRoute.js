@@ -10,6 +10,7 @@ Router.route('/')
   .delete(productsController.deleteAll)
 
 Router.route('/:id')
+  .get(productsController.getById)
   .put(productsValidation.createNew, productsController.updateById)
   .delete(productsController.deleteById)
 

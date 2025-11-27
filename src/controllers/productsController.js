@@ -17,6 +17,15 @@ const getAll = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
+const getById = async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const item = await productsService.findById(id)
+    if (!item) return res.status(404).json({ message: 'Not found' })
+    res.status(200).json(item)
+  } catch (error) { next(error) }
+}
+
 const updateById = async (req, res, next) => {
   try {
     const id = req.params.id
@@ -44,6 +53,7 @@ const deleteAll = async (req, res, next) => {
 export const productsController = {
   createNew,
   getAll,
+  getById,
   updateById,
   deleteById,
   deleteAll

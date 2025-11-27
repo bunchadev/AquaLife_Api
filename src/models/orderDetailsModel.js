@@ -38,7 +38,15 @@ const findOneById = async (orderDetailsId) => {
   } catch (error) { throw new Error(error) }
 }
 
+const findByOrderId = async (orderId) => {
+  try {
+    const items = await GET_DB().collection(ORDERDETAILS_COLLECTION_NAME).find({ ordersId: new ObjectId(orderId) }).toArray()
+    return items
+  } catch (error) { throw new Error(error) }
+}
+
 export const orderDetailsModel = {
   createNew,
   findOneById
+  , findByOrderId
 }
