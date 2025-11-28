@@ -24,6 +24,12 @@ const findById = async (id) => {
   } catch (err) { throw err }
 }
 
+const updateById = async (id, data) => {
+  try {
+    return await ordersModel.updateById(id, data)
+  } catch (err) { throw err }
+}
+
 const getAll = async () => {
   try {
     return await ordersModel.getAll()
@@ -34,5 +40,6 @@ export const ordersService = {
   createNew,
   findByCustomerId,
   findById,
+  updateById,
   getAll
 }
