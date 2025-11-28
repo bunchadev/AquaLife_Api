@@ -54,9 +54,19 @@ const getAll = async () => {
   } catch (error) { throw new Error(error) }
 }
 
+const updateById = async (id, data) => {
+  try {
+    const update = { $set: { ...data, updatedAt: Date.now() } }
+    await GET_DB().collection(ORDERS_COLLECTION_NAME).updateOne({ _id: new ObjectId(id) }, update)
+    const updated = await findById(id)
+    return updated
+  } catch (error) { throw new Error(error) }
+}
+
 export const ordersModel = {
   createNew,
   findByCustomerId,
   findById,
-  getAll
+  getAll,
+  updateById
 }
