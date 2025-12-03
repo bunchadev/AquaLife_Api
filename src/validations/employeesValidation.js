@@ -24,7 +24,7 @@ const createNew = async (req, res, next) => {
 
     phone: Joi.string().pattern(PHONE_RULE).message(PHONE_RULE_MESSAGE),
 
-    role: Joi.string().valid('admin', 'manager', 'staff').required().messages({
+    role: Joi.string().valid('Chủ', 'Quản lý', 'Nhân viên').required().messages({
       'string.base': '"role" must be a string.',
       'any.only': '"role" must be one of [admin, manager, staff].',
       'any.required': '"role" is a required field.'
