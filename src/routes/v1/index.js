@@ -8,6 +8,7 @@ import { ordersRouter } from './ordersRouter.js'
 import { orderDetailsRouter } from './orderDetailsRouter.js'
 import { authRoute } from './authRoute.js'
 import { headquaterRouter } from './headquaterRoute.js'
+import { reviewsRouter } from './reviewsRoute.js'
 
 const Router = express.Router()
 
@@ -23,6 +24,7 @@ Router.use('/products', productsRouter)
 Router.use('/orders', ordersRouter)
 Router.use('/order-details', orderDetailsRouter)
 Router.use('/auth', authRoute)
+Router.use('/reviews', reviewsRouter)
 
 export const APIs_V1 = Router
 
