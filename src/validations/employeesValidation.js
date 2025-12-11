@@ -5,7 +5,9 @@ import { PHONE_RULE, PHONE_RULE_MESSAGE, OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE 
 
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
-    branchesId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
+    headquaterId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE).optional(),
+
+    branchesId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE).optional(),
 
     name: Joi.string().min(3).max(100).required().messages({
       'string.base': '"name" must be a string.',
@@ -24,7 +26,7 @@ const createNew = async (req, res, next) => {
 
     phone: Joi.string().pattern(PHONE_RULE).message(PHONE_RULE_MESSAGE),
 
-    role: Joi.string().valid('Chủ', 'Quản lý', 'Nhân viên').required().messages({
+    role: Joi.string().valid('admin', 'manager', 'staff').required().messages({
       'string.base': '"role" must be a string.',
       'any.only': '"role" must be one of [admin, manager, staff].',
       'any.required': '"role" is a required field.'

@@ -46,14 +46,17 @@ const getByProductId = async (productId) => {
     const pipeline = [
       { $match: { product_id: pid } },
       { $sort: { created_at: -1 } },
-      { $lookup: {
+      {
+        $lookup: {
           from: 'customers',
           localField: 'customer_id',
           foreignField: '_id',
           as: 'customer'
-      }},
+        }
+      },
       { $unwind: { path: '$customer', preserveNullAndEmptyArrays: true } },
-      { $project: {
+      {
+        $project: {
           rating: 1,
           comment: 1,
           created_at: 1,
@@ -61,7 +64,8 @@ const getByProductId = async (productId) => {
           customer_id: 1,
           customer_name: '$customer.name',
           customer_image: '$customer.image'
-      }}
+        }
+      }
     ]
 
     const items = await GET_DB().collection(REVIEWS_COLLECTION_NAME).aggregate(pipeline).toArray()

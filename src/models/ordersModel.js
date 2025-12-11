@@ -8,6 +8,8 @@ const ORDERS_COLLECTION_SCHEMA = Joi.object({
   customersId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
   branchesId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
   totalPrice: Joi.number().min(0).required(),
+  shippingFee: Joi.number().min(0).default(0),
+  shippingMethod: Joi.string().valid('standard', 'express').default('standard'),
   status: Joi.string().valid('Đang chờ', 'Đã xác nhận', 'Đang vận chuyển', 'Đã giao', 'Đã hủy').required(),
   orderDate: Joi.date().iso().required(),
   deliveryAddress: Joi.string().min(10).max(255).required(),
