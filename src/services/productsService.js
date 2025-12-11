@@ -18,6 +18,7 @@ const getAll = async () => {
 }
 
 const findById = async (id) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     return await productsModel.findById(id)
   } catch (err) { throw err }

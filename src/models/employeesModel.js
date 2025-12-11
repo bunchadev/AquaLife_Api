@@ -5,11 +5,12 @@ import { ObjectId } from 'mongodb'
 
 const EMPLOYEES_COLLECTION_NAME = 'employees'
 const EMPLOYEES_COLLECTION_SCHEMA = Joi.object({
-  branchesId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
+  headquaterId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE).optional(),
+  branchesId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE).optional(),
   name: Joi.string().min(3).max(100).required(),
   email: Joi.string().email({ tlds: { allow: false } }).required(),
   phone: Joi.string().pattern(PHONE_RULE).message(PHONE_RULE_MESSAGE),
-  role: Joi.string().valid('Chủ', 'Quản lý', 'Nhân viên').required(),
+  role: Joi.string().valid('admin', 'manager', 'staff').required(),
   password: Joi.string().min(6).required(),
   createAt: Joi.date().timestamp('javascript').default(Date.now),
   updatedAt: Joi.date().timestamp('javascript').default(Date.now)

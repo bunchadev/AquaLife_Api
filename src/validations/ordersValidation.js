@@ -35,6 +35,15 @@ const createNew = async (req, res, next) => {
       'any.required': '"deliveryAddress" is a required field.'
     }),
 
+    shippingFee: Joi.number().min(0).optional().messages({
+      'number.base': '"shippingFee" must be a number.',
+      'number.min': '"shippingFee" cannot be negative.'
+    }),
+
+    shippingMethod: Joi.string().valid('standard', 'express').optional().messages({
+      'any.only': '"shippingMethod" must be one of [standard, express].'
+    }),
+
     note: Joi.string().max(500).allow('').optional().messages({
       'string.base': '"note" must be a string.',
       'string.max': '"note" should have a maximum length of {#limit} characters.'
