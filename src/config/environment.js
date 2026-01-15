@@ -12,7 +12,7 @@ export const env = {
 
   AUTHOR: process.env.AUTHOR,
 
-  JWT_SECRET: process.env.JWT_SECRET,
+  JWT_KEY: process.env.JWT_KEY,
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN
 
 }
