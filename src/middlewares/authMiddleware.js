@@ -1,18 +1,25 @@
 import jwt from 'jsonwebtoken'
-import { env } from '~/config/environment'
 
-export const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1] // "Bearer <token>"
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' })
-  }
-
+export const authMiddleware = async (req, res, next) => {
   try {
-    const decoded = jwt.verify(token, env.JWT_SECRET)
-    req.user = decoded
-    next()
-  } catch (error) {
-    res.status(403).json({ message: 'Invalid or expired token' })
+    const authHeader = req.headers.authorization
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
+    const token = authHeader.split(' ')[1]
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_KEY)
+      req.user = decoded
+      next()
+    } catch (err) {
+      return res.status(401).json({ message: 'Invalid token' })
+    }
+  } catch (err) {
+    next(err)
   }
 }
+
+// alias to match existing imports
+export const verifyToken = authMiddleware
+
+

@@ -1,46 +1,55 @@
-import { productsModel } from '~/models/productsModel'
+import { productsModel } from '~/models/productsModel.js'
 
-const createNew = async (reqBody) => {
-  // eslint-disable-next-line no-useless-catch
+const createNew = async (data) => {
   try {
-    const newProducts = {
-      ...reqBody
-    }
-
-    const createProducts = await productsModel.createNew(newProducts)
-    return createProducts
+    const result = await productsModel.createNew(data)
+    return result
   } catch (error) { throw error }
 }
 
 const getAll = async () => {
-  const items = await productsModel.getAll()
-  return items
+  try {
+    return await productsModel.getAll()
+  } catch (error) { throw error }
 }
 
 const findById = async (id) => {
-  // eslint-disable-next-line no-useless-catch
   try {
     return await productsModel.findById(id)
-  } catch (err) { throw err }
+  } catch (error) { throw error }
+}
+
+const findByType = async (type) => {
+  try {
+    return await productsModel.findByType(type)
+  } catch (error) { throw error }
+}
+
+const findByCategory = async (categoryId) => {
+  try {
+    return await productsModel.findByCategory(categoryId)
+  } catch (error) { throw error }
 }
 
 const updateById = async (id, data) => {
-  return await productsModel.updateById(id, data)
+  try {
+    await productsModel.updateById(id, data)
+    return await productsModel.findById(id)
+  } catch (error) { throw error }
 }
 
 const deleteById = async (id) => {
-  return await productsModel.deleteById(id)
-}
-
-const deleteAll = async () => {
-  return await productsModel.deleteAll()
+  try {
+    return await productsModel.deleteById(id)
+  } catch (error) { throw error }
 }
 
 export const productsService = {
   createNew,
   getAll,
   findById,
+  findByType,
+  findByCategory,
   updateById,
-  deleteById,
-  deleteAll
+  deleteById
 }

@@ -1,16 +1,16 @@
 import { StatusCodes } from 'http-status-codes'
-import { productsService } from '~/services/productsService'
+import { categoriesService } from '~/services/categoriesService'
 
 const createNew = async (req, res, next) => {
   try {
-    const result = await productsService.createNew(req.body)
+    const result = await categoriesService.createNew(req.body)
     res.status(StatusCodes.CREATED).json(result)
   } catch (error) { next(error) }
 }
 
 const getAll = async (req, res, next) => {
   try {
-    const items = await productsService.getAll()
+    const items = await categoriesService.getAll()
     res.status(StatusCodes.OK).json(items)
   } catch (error) { next(error) }
 }
@@ -18,32 +18,16 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
   try {
     const id = req.params.id
-    const item = await productsService.findById(id)
+    const item = await categoriesService.findById(id)
     if (!item) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
     res.status(StatusCodes.OK).json(item)
-  } catch (error) { next(error) }
-}
-
-const getByType = async (req, res, next) => {
-  try {
-    const type = req.params.type
-    const items = await productsService.findByType(type)
-    res.status(StatusCodes.OK).json(items)
-  } catch (error) { next(error) }
-}
-
-const getByCategory = async (req, res, next) => {
-  try {
-    const categoryId = req.params.categoryId
-    const items = await productsService.findByCategory(categoryId)
-    res.status(StatusCodes.OK).json(items)
   } catch (error) { next(error) }
 }
 
 const updateById = async (req, res, next) => {
   try {
     const id = req.params.id
-    const updated = await productsService.updateById(id, req.body)
+    const updated = await categoriesService.updateById(id, req.body)
     res.status(StatusCodes.OK).json(updated)
   } catch (error) { next(error) }
 }
@@ -51,17 +35,15 @@ const updateById = async (req, res, next) => {
 const deleteById = async (req, res, next) => {
   try {
     const id = req.params.id
-    await productsService.deleteById(id)
+    await categoriesService.deleteById(id)
     res.status(StatusCodes.NO_CONTENT).end()
   } catch (error) { next(error) }
 }
 
-export const productsController = {
+export const categoriesController = {
   createNew,
   getAll,
   getById,
-  getByType,
-  getByCategory,
   updateById,
   deleteById
 }
