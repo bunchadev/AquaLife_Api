@@ -43,7 +43,7 @@ const START_SERVER = () => {
     })
   }
 
-  // Đảm bảo đóng kết nối DB khi thoát ứng dụng
+  // Đảm bảo đóng kết nối DB khi thoát ứng dụng an toàn
   exitHook(() => {
     console.log('disconnecting')
     CLOSE_DB()
