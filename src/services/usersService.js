@@ -23,7 +23,7 @@ const createNew = async (reqBody) => {
     address: reqBody.address,
     password: hashedPassword,
     role: reqBody.role || 'customer',
-    status: reqBody.status || 'active'
+    imageUrl: reqBody.imageUrl || ''
   }
 
   const result = await usersModel.createNew(newUser)

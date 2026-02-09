@@ -1,25 +1,30 @@
 import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
+import { OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE } from '~/utils/validatiors'
 
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
-    product_name: Joi.string().required().messages({
+    categoryId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
+    name: Joi.string().required().messages({
       'any.required': '"product_name" is required.'
     }),
-    product_type: Joi.string().valid('fish', 'aquarium', 'accessory', 'food', 'plant').required().messages({
-      'any.only': '"product_type" must be one of [fish, aquarium, accessory, food, plant].',
-      'any.required': '"product_type" is required.'
-    }),
-    category_id: Joi.string().optional(),
     price: Joi.number().min(0).required().messages({
       'number.min': '"price" must be greater than or equal to 0.',
       'any.required': '"price" is required.'
     }),
-    stock_quantity: Joi.number().integer().min(0).optional(),
-    description: Joi.string().optional(),
-    image_url: Joi.string().optional(),
-    status: Joi.string().valid('available', 'out_of_stock', 'discontinued').optional()
+    quantity: Joi.number().integer().min(0).optional().messages({
+      'number.min': '"quantity" must be greater than or equal to 0.'
+    }),
+    description: Joi.string().optional().messages({
+      'string.base': '"description" must be a string.'
+    }),
+    imageUrl: Joi.string().optional().messages({
+      'string.base': '"imageUrl" must be a string.'
+    }),
+    status: Joi.string().valid('Còn hàng', 'Hết hàng').default('Còn hàng').messages({
+      'any.only': '"status" must be either "Còn hàng" or "Hết hàng".'
+    })
   })
 
 

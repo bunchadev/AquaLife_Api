@@ -14,9 +14,6 @@ Router.route('/:id')
   .put(verifyToken, productsValidation.createNew, productsController.updateById)
   .delete(verifyToken, productsController.deleteById)
 
-Router.route('/type/:type')
-  .get(productsController.getByType)
-
 Router.route('/category/:categoryId')
   .get(productsController.getByCategory)
 

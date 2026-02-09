@@ -1,16 +1,17 @@
 import Joi from 'joi'
 import { ObjectId } from 'mongodb'
 import { GET_DB } from '~/config/mongodb'
+import { PHONE_RULE, PHONE_RULE_MESSAGE } from '~/utils/validatiors'
 
 const USERS_COLLECTION_NAME = 'users'
 const USERS_COLLECTION_SCHEMA = Joi.object({
   name: Joi.string().min(3).max(100).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(10).required(),
-  phone: Joi.string().pattern(/^[0-9]{10,15}$/).required(),
+  phone: Joi.string().pattern(PHONE_RULE).message(PHONE_RULE_MESSAGE).required(),
   address: Joi.string().min(10).max(200).required(),
   role: Joi.string().valid('customer', 'admin').default('customer'),
-  status: Joi.string().valid('active', 'inactive').default('active'),
+  imageUrl: Joi.string().uri().optional(),
   createdAt: Joi.date().default(() => new Date()),
   updatedAt: Joi.date().default(() => new Date())
 })

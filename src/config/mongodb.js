@@ -1,7 +1,8 @@
 import { MongoClient, ServerApiVersion } from 'mongodb'
 import { env } from '~/config/environment'
 
-let trelloDatabaseInstance = null
+// Lưu instance DB để tái sử dụng trong toàn app
+let databaseInstance = null
 
 const mongoClientInstance = new MongoClient(env.MONGODB_URI, {
   serverApi: {
@@ -13,7 +14,7 @@ const mongoClientInstance = new MongoClient(env.MONGODB_URI, {
 
 export const CONNECT_DB = async () => {
   await mongoClientInstance.connect()
-  trelloDatabaseInstance = mongoClientInstance.db(env.DATABASE_NAME)
+  databaseInstance = mongoClientInstance.db(env.DATABASE_NAME)
 }
 
 export const CLOSE_DB = async () => {
@@ -21,7 +22,7 @@ export const CLOSE_DB = async () => {
 }
 
 export const GET_DB = () => {
-  if (!trelloDatabaseInstance) throw new Error ('Must connect to Database fisrt')
-  return trelloDatabaseInstance
+  if (!databaseInstance) throw new Error('Must connect to database first')
+  return databaseInstance
 }
 

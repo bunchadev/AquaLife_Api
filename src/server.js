@@ -11,6 +11,7 @@ import { corsOptions } from './config/cors'
 const START_SERVER = () => {
   const app = express()
 
+  // Cấu hình middleware cơ bản
   app.use(cors(corsOptions))
   app.use(express.json())
   app.use('/v1', APIs_V1)
@@ -18,7 +19,7 @@ const START_SERVER = () => {
 
   if (env.BUILD_MODE === 'production') {
     const server = app.listen(process.env.PORT, () => {
-      console.log(`Production Hello ${env.AUTHOR}, Back-end sever is running successfully at Port ${process.env.PORT}`)
+      console.log(`Production Hello ${env.AUTHOR}, Back-end server is running successfully at Port ${process.env.PORT}`)
     })
     server.on('error', (err) => {
       if (err && err.code === 'EADDRINUSE') {
@@ -30,7 +31,7 @@ const START_SERVER = () => {
     })
   } else {
     const server = app.listen(env.LOCAL_DEV_APP_PORT, env.LOCAL_DEV_APP_HOST, () => {
-      console.log(`Local Dev Hello ${env.AUTHOR}, Back-end sever is running successfully at Host ${env.LOCAL_DEV_APP_HOST} and Port: ${env.LOCAL_DEV_APP_PORT}`)
+      console.log(`Local Dev Hello ${env.AUTHOR}, Back-end server is running successfully at Host ${env.LOCAL_DEV_APP_HOST} and Port: ${env.LOCAL_DEV_APP_PORT}`)
     })
     server.on('error', (err) => {
       if (err && err.code === 'EADDRINUSE') {
@@ -42,6 +43,7 @@ const START_SERVER = () => {
     })
   }
 
+  // Đảm bảo đóng kết nối DB khi thoát ứng dụng
   exitHook(() => {
     console.log('disconnecting')
     CLOSE_DB()
@@ -52,9 +54,9 @@ const START_SERVER = () => {
 
 (async () => {
   try {
-    console.log('Connecting to MongoDB Clould Atlas!')
+    console.log('Connecting to MongoDB Cloud Atlas!')
     await CONNECT_DB()
-    console.log('Connected to MongoDB Clould Atlas!')
+    console.log('Connected to MongoDB Cloud Atlas!')
 
     START_SERVER()
   } catch (error) {

@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
 const userSchema = Joi.object({
-  name: Joi.string().min(3).max(100).required().messages({
+  name: Joi.string().min(2).max(100).required().messages({
     'string.base': '"name" phải là chuỗi.',
     'string.empty': '"name" không được để trống.',
     'string.min': '"name" tối thiểu {#limit} ký tự.',
@@ -18,8 +18,8 @@ const userSchema = Joi.object({
     'string.min': '"password" tối thiểu {#limit} ký tự.',
     'any.required': '"password" là bắt buộc.'
   }),
-  phone: Joi.string().pattern(/^[0-9]{10,15}$/).required().messages({
-    'string.pattern.base': '"phone" phải từ 10-15 số.',
+  phone: Joi.string().pattern(/^(0(3[2-9]|5[2689]|7[06-9]|8[1-689]|9[0-46-9]))\d{7}$/).required().messages({
+    'string.pattern.base': '"phone" không hợp lệ.',
     'any.required': '"phone" là bắt buộc.'
   }),
   address: Joi.string().min(10).max(200).required().messages({
@@ -27,7 +27,9 @@ const userSchema = Joi.object({
     'any.required': '"address" là bắt buộc.'
   }),
   role: Joi.string().valid('customer', 'admin').optional(),
-  status: Joi.string().valid('active', 'inactive').optional()
+  imageUrl: Joi.string().uri().optional().messages({
+    'string.uri': '"imageUrl" phải là một URL hợp lệ.'
+  })
 })
 
 const createNew = async (req, res, next) => {

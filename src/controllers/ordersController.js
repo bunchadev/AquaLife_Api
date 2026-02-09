@@ -1,16 +1,16 @@
 import { StatusCodes } from 'http-status-codes'
-import { productsService } from '~/services/productsService'
+import { ordersService } from '~/services/ordersService'
 
 const createNew = async (req, res, next) => {
   try {
-    const result = await productsService.createNew(req.body)
+    const result = await ordersService.createNew(req.body, req.user)
     res.status(StatusCodes.CREATED).json(result)
   } catch (error) { next(error) }
 }
 
 const getAll = async (req, res, next) => {
   try {
-    const items = await productsService.getAll()
+    const items = await ordersService.getAll(req.user)
     res.status(StatusCodes.OK).json(items)
   } catch (error) { next(error) }
 }
@@ -18,24 +18,17 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
   try {
     const id = req.params.id
-    const item = await productsService.findById(id)
+    const item = await ordersService.findById(id, req.user)
     if (!item) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
     res.status(StatusCodes.OK).json(item)
-  } catch (error) { next(error) }
-}
-
-const getByCategory = async (req, res, next) => {
-  try {
-    const categoryId = req.params.categoryId
-    const items = await productsService.findByCategory(categoryId)
-    res.status(StatusCodes.OK).json(items)
   } catch (error) { next(error) }
 }
 
 const updateById = async (req, res, next) => {
   try {
     const id = req.params.id
-    const updated = await productsService.updateById(id, req.body)
+    const updated = await ordersService.updateById(id, req.body, req.user)
+    if (!updated) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
     res.status(StatusCodes.OK).json(updated)
   } catch (error) { next(error) }
 }
@@ -43,16 +36,16 @@ const updateById = async (req, res, next) => {
 const deleteById = async (req, res, next) => {
   try {
     const id = req.params.id
-    await productsService.deleteById(id)
+    const result = await ordersService.deleteById(id, req.user)
+    if (!result) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
     res.status(StatusCodes.NO_CONTENT).end()
   } catch (error) { next(error) }
 }
 
-export const productsController = {
+export const ordersController = {
   createNew,
   getAll,
   getById,
-  getByCategory,
   updateById,
   deleteById
 }

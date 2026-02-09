@@ -6,6 +6,7 @@ import { verifyToken } from '~/middlewares/authMiddleware'
 const Router = express.Router()
 Router.route('/')
   .get(verifyToken, usersController.getAll)
+  .post(userValidation.createNew, usersController.createNew)
 
 Router.route('/:id')
   .get(verifyToken, usersController.getById)

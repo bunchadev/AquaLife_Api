@@ -4,9 +4,9 @@ import { GET_DB } from '~/config/mongodb'
 
 const CATEGORIES_COLLECTION_NAME = 'categories'
 const CATEGORIES_COLLECTION_SCHEMA = Joi.object({
-  category_name: Joi.string().required(),
-  category_type: Joi.string().valid('fish', 'aquarium', 'accessory', 'food', 'plant').required(),
-  description: Joi.string().optional()
+  name: Joi.string().required(),
+  description: Joi.string().optional(),
+  createdAt: Joi.date().default(() => new Date())
 })
 
 const validateBeforeCreate = async (data) => CATEGORIES_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })

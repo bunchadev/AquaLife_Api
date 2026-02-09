@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_KEY = process.env.JWT_KEY
 
 export const generateToken = (payload) => {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' })
+  // Tạo JWT từ payload, phục vụ các tác vụ hệ thống
+  return jwt.sign(payload, JWT_KEY, { expiresIn: '7d' })
 }
