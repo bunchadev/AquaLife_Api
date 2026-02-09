@@ -18,7 +18,7 @@ const START_SERVER = () => {
   app.use(errorHandlingMiddleware)
 
   if (env.BUILD_MODE === 'production') {
-    const server = app.listen(process.env.PORT, () => {
+    const server = app.listen(process.env.PORT, '0.0.0.0', () => {
       console.log(`Production Hello ${env.AUTHOR}, Back-end server is running successfully at Port ${process.env.PORT}`)
     })
     server.on('error', (err) => {
