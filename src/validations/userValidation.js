@@ -18,17 +18,13 @@ const userSchema = Joi.object({
     'string.min': '"password" tối thiểu {#limit} ký tự.',
     'any.required': '"password" là bắt buộc.'
   }),
-  phone: Joi.string().pattern(/^(0(3[2-9]|5[2689]|7[06-9]|8[1-689]|9[0-46-9]))\d{7}$/).required().messages({
-    'string.pattern.base': '"phone" không hợp lệ.',
-    'any.required': '"phone" là bắt buộc.'
-  }),
-  address: Joi.string().min(10).max(200).required().messages({
-    'string.min': '"address" tối thiểu {#limit} ký tự.',
-    'any.required': '"address" là bắt buộc.'
-  }),
   role: Joi.string().valid('customer', 'admin').optional(),
   imageUrl: Joi.string().uri().optional().messages({
     'string.uri': '"imageUrl" phải là một URL hợp lệ.'
+  }),
+  otp: Joi.string().length(6).required().messages({
+    'string.length': '"otp" phải gồm 6 ký tự.',
+    'any.required': '"otp" là bắt buộc.'
   })
 })
 
@@ -64,8 +60,21 @@ const login = async (req, res, next) => {
   }
 }
 
+const sendOtp = async (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required()
+  })
+  try {
+    await schema.validateAsync(req.body, { abortEarly: false })
+    next()
+  } catch (error) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message))
+  }
+}
+
 export const userValidation = {
   createNew,
   updateById,
-  login
+  login,
+  sendOtp
 }
