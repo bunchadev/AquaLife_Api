@@ -3,8 +3,15 @@ import { usersService } from '~/services/usersService'
 
 const createNew = async (req, res, next) => {
   try {
-    const user = await usersService.createNew(req.body)
-    res.status(StatusCodes.CREATED).json(user)
+    const createdUser = await usersService.createNew(req.body)
+    res.status(StatusCodes.CREATED).json(createdUser)
+  } catch (error) { next(error) }
+}
+
+const sendOtp = async (req, res, next) => {
+  try {
+    const result = await usersService.sendOtp(req.body.email)
+    res.status(StatusCodes.OK).json(result)
   } catch (error) { next(error) }
 }
 
@@ -22,7 +29,26 @@ const login = async (req, res, next) => {
 
     // Xoá refreshToken khỏi kết quả trả về, để JS ở Frontend không đọc được
     delete result.refreshToken
+    res.status(StatusCodes.OK).json(result)
+  } catch (error) { next(error) }
+}
 
+const googleLogin = async (req, res, next) => {
+  try {
+    const { idToken } = req.body
+    if (!idToken) throw new ApiError(StatusCodes.BAD_REQUEST, 'Thiếu idToken từ Google')
+    
+    const result = await usersService.googleLogin(idToken)
+    
+    // Set HTTP-Only Cookie cho Refresh Token
+    res.cookie('refresh_token', result.refreshToken, {
+      httpOnly: true,
+      secure: process.env.BUILD_MODE === 'production',
+      sameSite: 'lax',
+      maxAge: 14 * 24 * 60 * 60 * 1000
+    })
+
+    delete result.refreshToken
     res.status(StatusCodes.OK).json(result)
   } catch (error) { next(error) }
 }
@@ -86,7 +112,9 @@ const logout = async (req, res, next) => {
 
 export const usersController = {
   createNew,
+  sendOtp,
   login,
+  googleLogin,
   getAll,
   getById,
   updateById,

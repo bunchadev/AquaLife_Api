@@ -4,8 +4,10 @@ import { userValidation } from '~/validations/userValidation'
 
 const Router = express.Router()
 
+Router.post('/send-otp', userValidation.sendOtp, usersController.sendOtp)
 Router.post('/register', userValidation.createNew, usersController.createNew)
 Router.post('/login', userValidation.login, usersController.login)
+Router.post('/google-login', usersController.googleLogin)
 Router.post('/refresh-token', usersController.refreshToken)
 
 // Import authMiddleware để lấy req.user cho route logout

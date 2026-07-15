@@ -9,7 +9,6 @@
 import Joi from 'joi'
 import { ObjectId } from 'mongodb'
 import { GET_DB } from '~/config/mongodb'
-import { PHONE_RULE, PHONE_RULE_MESSAGE } from '~/utils/validators' // Fix: đúng tên file (không có typo)
 
 const USERS_COLLECTION_NAME = 'users'
 
@@ -22,17 +21,13 @@ const USERS_COLLECTION_SCHEMA = Joi.object({
 
   email: Joi.string().email().required(),
 
-  // Password tối thiểu 10 ký tự (đủ mạnh nhưng không quá khó nhớ)
-  password: Joi.string().min(10).required(),
+  // Password có thể rỗng hoặc null nếu đăng nhập bằng Google
+  password: Joi.string().min(10).allow('', null).optional(),
 
-  // Validate số điện thoại Việt Nam theo pattern
-  phone: Joi.string().pattern(PHONE_RULE).message(PHONE_RULE_MESSAGE).required(),
-
-  // Địa chỉ đủ dài để có nghĩa (số nhà, tên đường, phường/xã)
-  address: Joi.string().min(10).max(200).required(),
-
-  // Role: chỉ 2 giá trị hợp lệ, mặc định là 'customer'
   role: Joi.string().valid('customer', 'admin').default('customer'),
+
+  // Thêm provider để phân biệt nguồn tạo tài khoản
+  provider: Joi.string().valid('local', 'google').default('local'),
 
   // imageUrl: tùy chọn, phải là URI hợp lệ nếu có
   imageUrl: Joi.string().uri().optional().allow(''), // allow('') vì có thể là empty string
