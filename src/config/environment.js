@@ -4,7 +4,6 @@ export const env = {
   MONGODB_URI: process.env.MONGODB_URI,
   DATABASE_NAME: process.env.DATABASE_NAME,
 
-  APP_HOST: process.env.APP_HOST,
   LOCAL_DEV_APP_PORT: process.env.LOCAL_DEV_APP_PORT,
   LOCAL_DEV_APP_HOST: process.env.LOCAL_DEV_APP_HOST,
 
@@ -13,6 +12,8 @@ export const env = {
   AUTHOR: process.env.AUTHOR,
 
   JWT_KEY: process.env.JWT_KEY,
-  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
 
+  REFRESH_TOKEN_KEY: process.env.REFRESH_TOKEN_KEY,
+  REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN
 }
